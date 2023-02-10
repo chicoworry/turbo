@@ -93,6 +93,7 @@ enum RouterIncomingMessage {
     FullMiddleware {
         data: FullMiddlewareResponse,
     },
+    None,
     Error(StructuredError),
 }
 
@@ -101,6 +102,7 @@ enum RouterIncomingMessage {
 pub enum RouterResult {
     Rewrite(RewriteResponse),
     FullMiddleware(FullMiddlewareResponse),
+    None,
     Error,
 }
 
@@ -109,6 +111,7 @@ impl From<RouterIncomingMessage> for RouterResult {
         match value {
             RouterIncomingMessage::Rewrite { data } => Self::Rewrite(data),
             RouterIncomingMessage::FullMiddleware { data } => Self::FullMiddleware(data),
+            RouterIncomingMessage::None => Self::None,
             _ => Self::Error,
         }
     }
