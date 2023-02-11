@@ -12,12 +12,15 @@ use crate::{
 };
 
 #[turbo_tasks::function]
-pub fn get_edge_environment(server_addr: ServerAddrVc) -> EnvironmentVc {
+pub fn get_edge_environment(
+    server_addr: ServerAddrVc,
+    intention: Value<EnvironmentIntention>,
+) -> EnvironmentVc {
     EnvironmentVc::new(
         Value::new(ExecutionEnvironment::EdgeWorker(
             EdgeWorkerEnvironment { server_addr }.into(),
         )),
-        Value::new(EnvironmentIntention::Api),
+        intention,
     )
 }
 
